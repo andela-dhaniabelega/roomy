@@ -3,7 +3,7 @@ Roomy
 
 Usage: 
 	roomy create_room <room_type> <room_name>...
-	roomy add_person <person_name> <FELL0W|STAFF> [wants_accomodation]
+	roomy add_person <person_name> (Fellow|Staff) [y|n]
 """
 from docopt import docopt
 
