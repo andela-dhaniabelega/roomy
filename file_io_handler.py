@@ -8,7 +8,7 @@ def save(objs, file_name):
 	"""
 	res = read_file(file_name)
 	res.extend(objs)
-	write_to_file(res)
+	write_to_file(res, file_name)
 
 
 def read_file(file_name):
@@ -29,4 +29,4 @@ def write_to_file(objs, file_name):
 	:param file_name: a str
 	"""
 	with open(file_name, 'a+b') as pickle_file:
-		pickle.dump(res, pickle_file)
+		pickle.dump(objs, pickle_file)
