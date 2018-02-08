@@ -3,6 +3,12 @@ class Room:
     self.name = name
     self._occupants = []
 
+  def __str__(self):
+    return '{0} : {1}: {2}'.format(self.name, self.capacity, len(self._occupants))
+
+  def __repr__(self):
+    return 'Room(name={0})'.format(self.name)
+
   def add_person(self, person):
     if len(self._occupants) < self.CAPACITY:
       self._occupants.append(person)

@@ -4,6 +4,12 @@ class Person:
     self.staff_no = staff_no
     self._office = None
 
+  def __repr__(self):
+    return 'Person(name={0}, staff_no={1})'.format(self.name, self.staff_no)
+
+  def __str__(self):
+    return '{0} : {1} : {2}'.format(self.name, self.staff_no, self._office)
+
   def update_office(self, office):
     """Updates person's office
     :param office: an Office instance

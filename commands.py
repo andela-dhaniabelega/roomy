@@ -1,9 +1,14 @@
 import os
 import pickle
+import uuid
 
 import config
+from person_mgr.staff import Staff
+from person_mgr.fellow import Fellow
 from room_mgr.living_space import LivingSpace
 from room_mgr.office import Office
+from allocation_mgr.allocation_mgr import AllocationManager
+
 
 def create_room(arguments):
 	options = {'room_type', 'room_name'}
@@ -16,31 +21,28 @@ def create_room(arguments):
 		else:
 			rooms.append(LivingSpace(name=name))
 
-	save_room(rooms)
-
-
-def save_room(new_rooms):
-	"""Save rooms in pb file
-	:params new_rooms: a list
-	"""
-	import ipdb; ipdb.set_trace()
-
-	rooms = []
-	if os.path.exists(config.ROOM_FILE_NAME):
-		with open(config.ROOM_FILE_NAME, 'rb') as pickle_file:
-			rooms = pickle.load(pickle_file)
-
-	rooms.extend(new_rooms)
-
-	with open(config.ROOM_FILE_NAME, 'a+b') as pickle_file:
-		pickle.dump(rooms, pickle_file)
+	save(rooms, config.ROOM_FILE_NAME)
 
 
 def add_person(arguments):
-	options = {'person_name', 'FELLOW', 'STAFF', 'wants_accomodation'}
-	print(arguments)
+	options = {'person_name', 'Fellow', 'Staff', 'y', 'n'}
 	args = get_args(arguments, options)
-	print(args)
+
+	name = args['person_name']
+	staff_no = str(uuid.uuid4())
+	
+	if args[config.STAFF]:
+		person = Staff(name, staff_no)
+	else:
+		wants_accomodation = True if args['y'] else False
+		person = Fellow(name, staff_no, wants_accomodation)
+
+	AllocationManager().allocate(person)
+
+	# TODO: Handle for cases where there are no available rooms
+	
+	# Add room to db
+	save([person], config.PERSON_FILE_NAME)
 
 
 def get_args(docopt_args, target_fields):

@@ -1,2 +1,6 @@
 ROOM_FILE_NAME = 'rooms.pb'
 PERSON_FILE_NAME = 'persons.pb'
+FELLOW = 'Fellow'
+STAFF = 'Staff'
+LIVING_SPACE = 'LivingSpace'
+OFFICE = 'Office'
