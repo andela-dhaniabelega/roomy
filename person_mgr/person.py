@@ -1,3 +1,6 @@
+from room_mgr.office import Office
+
+
 class Person:
   def __init__(self, name, staff_no):
     self.name = name

@@ -5,7 +5,8 @@ import config
 import person_mgr
 import room_mgr
 from file_io_handler import read_file
-
+from room_mgr.office import Office
+from room_mgr.living_space import LivingSpace
 
 logger = logging.getLogger(__name__)
 
@@ -47,32 +48,30 @@ class AllocationManager:
 				logger.warning('There was no available living_space to assign to %s', person.name)
 			else:
 				living_space.add_person(person)
-				person.update_living_space(living_sapce)
+				person.update_living_space(living_space)
 
 	def get_random_office(self):
-		print(self.rooms)
-		offices = [room for room in self.rooms if room.room_type == config.OFFICE]
-		print(offices)
+		offices = [room for room in self.rooms if isinstance(room, Office)]
 		office = None
 		set_of_offices = {office.name for office in offices}
 		checked_offices = {}
-
-		while office is not None and checked_office != set_of_offices:
+		# import ipdb; ipdb.set_trace()
+		while office is None and checked_offices != set_of_offices:
 			office = random.choice(offices)
-			if len(office.occupants) == self.CAPACITY:
+			if office.is_full():
 				office = None
 
 		return office
 
-def get_random_living_space(self):
-		living_spaces = [room for room in self.rooms if room.room_type == config.LIVING_SPACE]
+	def get_random_living_space(self):
+		living_spaces = [room for room in self.rooms if isinstance(room, LivingSpace)]
 		living_space = None
 		set_of_living_spaces = {living_space.name for living_space in living_spaces}
 		checked_living_spaces = {}
-
-		while living_space is not None and checked_living_space != set_of_living_spaces:
+		import ipdb; ipdb.set_trace()
+		while living_space is None and checked_living_spaces != set_of_living_spaces:
 			living_space = random.choice(living_spaces)
-			if len(living_space.occupants) == self.CAPACITY:
+			if living_space.is_full():
 				living_space = None
 
 		return living_space

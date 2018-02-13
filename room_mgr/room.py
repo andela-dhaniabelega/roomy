@@ -27,6 +27,11 @@ class Room:
   def get_names_of_occupants(self):
     return [name for person.name in self._occupants]
 
+  def is_full(self):
+    if len(self._occupants) == self.CAPACITY:
+      return True
+    return False
+
 
 class RoomFullException(Exception):
   """Raise this exception when the room is full"""

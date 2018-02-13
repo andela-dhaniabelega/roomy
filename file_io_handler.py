@@ -28,5 +28,5 @@ def write_to_file(objs, file_name):
 	:param objs: a list
 	:param file_name: a str
 	"""
-	with open(file_name, 'a+b') as pickle_file:
+	with open(file_name, 'wb') as pickle_file:
 		pickle.dump(objs, pickle_file)

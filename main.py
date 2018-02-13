@@ -23,7 +23,13 @@ def main():
 	arguments = docopt(__doc__, version='1.0.0')
 	for key, value in arguments.items():
 		if value and is_command(key):
-			print(dispatch_cmd(key, arguments))
+			try:
+				msg = dispatch_cmd(key, arguments)
+			except Exception as e:
+				print(str(e))
+			else:
+				if msg:
+					print(msg)
 
 
 if __name__ == '__main__':
